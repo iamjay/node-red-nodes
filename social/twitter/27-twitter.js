@@ -443,6 +443,15 @@ module.exports = function(RED) {
                         });
                     }
                 }
+                else if (msg.hasOwnProperty("tweet")) {
+                    twit.retweetStatus(msg.tweet.id_str, function (err, data) {
+                        if (err) {
+                            node.status({fill:"red",shape:"ring",text:"twitter.status.failed"});
+                            node.error(err,msg);
+                        }
+                        node.status({});
+                    });
+                }
                 else { node.warn(RED._("twitter.errors.nopayload")); }
             });
         }
